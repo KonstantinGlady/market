@@ -2,10 +2,14 @@ package com.gik.market.market.controllers;
 
 import com.gik.market.market.entities.Product;
 import com.gik.market.market.services.ProductService;
+import com.gik.market.market.utils.ProductFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/products")
@@ -19,8 +23,12 @@ public class ProductController {
     }
 
     @GetMapping
-    public String allProducts(Model uiModel) {
-        uiModel.addAttribute("products", productService.allProducts());
+    public String allProducts(@RequestParam Map<String, String> requestParams, Model uiModel) {
+        int pageNumber = Integer.parseInt(requestParams.getOrDefault("p", "1"));
+        ProductFilter filter = new ProductFilter(requestParams);
+        Page<Product> products = productService.allProducts(filter.getSpec(), pageNumber);
+        uiModel.addAttribute("products", products);
+        uiModel.addAttribute("filterDef", filter.getFilterDef());
         return "/products";
     }
 
