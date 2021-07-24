@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,6 +26,7 @@
                    class="form-control" id="maximalPrice">
         </div>
         <button type="submit" class="btn btn-primary">Применить</button>
+        <a th:href="@{/products}" type="button" class="btn btn-warning">Сбросить</a>
     </form>
     <H1>Каталог продуктов</H1>
     <a th:href="@{/products/add}">Add new product</a>
@@ -53,7 +54,7 @@
     </table>
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-            <li class="page-item">
+            <li class="page-item" th:classappend="${products.isFirst()? 'disabled':'' }">
                 <a class="page-link"
                    th:href="@{'/products/?p=' + ${products.previousOrFirstPageable().getPageNumber()+1} + ${filterDef}}">Previous</a>
             </li>
@@ -63,7 +64,7 @@
                 <a class="page-link" th:text="${i}" th:href="@{'/products?p=' + ${i} + ${filterDef}}"></a>
             </li>
 
-            <li class="page-item">
+            <li class="page-item" th:classappend="${products.isLast()?'disabled':''}">
                 <a class="page-link"
                    th:href="@{'/products/?p='+${products.nextOrLastPageable().getPageNumber()+1} + ${filterDef}}">Next</a>
             </li>

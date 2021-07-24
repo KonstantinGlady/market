@@ -1,6 +1,7 @@
 package com.gik.market.market.services;
 
 import com.gik.market.market.entities.Product;
+import com.gik.market.market.entities.dto.ProductDto;
 import com.gik.market.market.exceptions.ProductNotFoundException;
 import com.gik.market.market.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,25 @@ public class ProductService {
 
     public Product findById(Long id) {
         return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("product not found with id " + id));
+    }
+
+    public List<ProductDto> getAllBy() {
+        return productRepository.getAllBy();
+    }
+
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    public Product save(Product product) {
+        return  productRepository.save(product);
+    }
+
+    public boolean existsById(Long id) {
+        return productRepository.existsById(id);
     }
 }
