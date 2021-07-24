@@ -12,4 +12,9 @@ public class MainController {
         uiModel.addAttribute("name", "Guest");
         return "/about";
     }
+
+    @GetMapping("/")
+    public String homePage() {
+        return "index";
+    }
 }
